@@ -31,6 +31,7 @@ class Runner extends Model
 
     public function getRunnerWithHistory($runnerID)
     {
+        \Log::info('DB Hit');
         $runnerInfo = Runner::find($runnerID);
 
         $runnerFormDatas = $runnerInfo->formDatas()->get();

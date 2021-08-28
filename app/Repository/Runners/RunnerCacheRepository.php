@@ -21,6 +21,7 @@ class RunnerCacheRepository implements RunnerRepositoryInterface
 
     public function getRunnerWithHistory($runnerID)
     {
+        \Log::info('Cache Hit');
         return $this->cache->remember($runnerID, self::TTL, function () use ($runnerID) {
             return $this->repo->getRunnerWithHistory($runnerID);
         } );

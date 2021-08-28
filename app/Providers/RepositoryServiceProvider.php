@@ -2,8 +2,11 @@
 
 namespace App\Providers;
 
+use App\Models\Runner;
+use App\Repository\Runners\RunnerCacheRepository;
 use App\Repository\Runners\RunnerRepository;
 use App\Repository\Runners\RunnerRepositoryInterface;
+use Illuminate\Cache\CacheManager;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -17,12 +20,12 @@ class RepositoryServiceProvider extends ServiceProvider
     {
 
         //without cache layer
-        $this->app->bind(RunnerRepositoryInterface::class,RunnerRepository::class );
+//        $this->app->bind(RunnerRepositoryInterface::class,RunnerRepository::class );
 
         //with cache layer
-//        $this->app->bind(RunnerRepositoryInterface::class,function($app){
-//            return new RunnerCacheRepository(new CacheManager($app),new RunnerRepository(new Runner()));
-//        });
+        $this->app->bind(RunnerRepositoryInterface::class,function($app){
+            return new RunnerCacheRepository(new CacheManager($app),new RunnerRepository(new Runner()));
+        });
 
     }
 
